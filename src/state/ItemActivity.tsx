@@ -63,6 +63,14 @@ export function useInboxThreads() {
   );
 }
 
+export function useReturnMessageActivity() {
+  const { activity } = useActivityContext();
+
+  return Object.entries(activity).flatMap(([itemId, item]) =>
+    item ? getMessages(item).map((message) => ({ itemId, message })) : [],
+  );
+}
+
 export function useItemActivity(id: string) {
   const context = useActivityContext();
   const activity = context.activity[id] ?? {};

@@ -34,6 +34,8 @@ export function UserInfo({ firstName, image }: UserInfoProps) {
 const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
+    flexShrink: 1,
+    minHeight: 44,
     alignItems: 'center',
     gap: 10,
   },

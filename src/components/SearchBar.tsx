@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     borderWidth: 1.5,
   },
   handle: {
-    position: 'absolute',
+    position: 'relative',
     left: 10,
     top: 12,
     width: 7,

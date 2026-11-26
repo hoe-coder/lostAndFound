@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import {
   FlatList,
-  ScrollView,
+  Platform,
   StyleSheet,
   Text,
   View,
@@ -12,7 +12,6 @@ import { ItemCard } from '../../components/ItemCard';
 import { ItemStatusFilter, type ItemStatus } from '../../components/ItemStatusFilter';
 import { SearchBar } from '../../components/SearchBar';
 import { useItemReports } from '../../state/ItemReports';
-import { AppFooter } from '../../layout/FooterBar';
 import { filterItems, getFoundItemCategories, getFoundItems, getLostItems, type ItemReport } from '../../utils';
 
 const categories = ['', ...getFoundItemCategories()];
@@ -46,40 +45,35 @@ export default function StartPage() {
 
   return (
     <View style={[styles.screen, { backgroundColor: dark ? '#0F172A' : '#F8FAFC' }]}>
-      <View style={styles.filters}>
-        <SearchBar placeholder="Search items, brands, places…" value={query} onChangeText={setQuery} />
-        <ItemStatusFilter value={status} counts={counts} onChange={setStatus} />
-
-        <View>
-          <ScrollView
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            keyboardShouldPersistTaps="handled"
-            contentContainerStyle={styles.categories}
-          >
-            {categories.map((option) => (
-              <CategoryPill
-                key={option}
-                label={option || 'All'}
-                selected={category === option}
-                onPress={() => setCategory(option)}
-              />
-            ))}
-          </ScrollView>
-        </View>
-      </View>
-
       <FlatList
         style={styles.itemList}
         data={items}
         keyExtractor={(item) => item.id}
+        bounces={false}
+        overScrollMode="never"
         keyboardShouldPersistTaps="handled"
         contentContainerStyle={styles.results}
-        ListFooterComponent={AppFooter}
         ListHeaderComponent={
-          <View style={styles.listHeading}>
-            <Text accessibilityRole="header" style={[styles.heading, { color: textColor }]}>{heading}</Text>
-            <Text style={{ color: mutedColor }}>{items.length} {items.length === 1 ? 'item' : 'items'}</Text>
+          <View style={styles.listHeader}>
+            <View style={styles.filters}>
+              <SearchBar placeholder="Search items, brands, places…" value={query} onChangeText={setQuery} />
+              <ItemStatusFilter value={status} counts={counts} onChange={setStatus} />
+
+              <View style={styles.categories}>
+                {categories.map((option) => (
+                  <CategoryPill
+                    key={option}
+                    label={option || 'All'}
+                    selected={category === option}
+                    onPress={() => setCategory(option)}
+                  />
+                ))}
+              </View>
+            </View>
+            <View style={styles.listHeading}>
+              <Text accessibilityRole="header" style={[styles.heading, { color: textColor }]}>{heading}</Text>
+              <Text style={{ color: mutedColor }}>{items.length} {items.length === 1 ? 'item' : 'items'}</Text>
+            </View>
           </View>
         }
         ListEmptyComponent={
@@ -97,28 +91,37 @@ export default function StartPage() {
   );
 }
 
+// Keep browser scroll gestures within the feed, including at the list boundaries.
+const webScrollBoundary = Platform.OS === 'web' ? { overscrollBehaviorY: 'none' } : undefined;
+
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
     minHeight: 0,
+    overflow: 'hidden',
+    ...webScrollBoundary,
   },
   filters: {
-    flexShrink: 0,
     gap: 12,
     padding: 16,
     paddingBottom: 12,
   },
   categories: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
     gap: 8,
   },
   itemList: {
     flex: 1,
     minHeight: 0,
+    ...webScrollBoundary,
   },
   results: {
     gap: 10,
+    paddingBottom: 16,
   },
   listInset: { paddingHorizontal: 16 },
+  listHeader: { gap: 10 },
   listHeading: {
     flexDirection: 'row',
     alignItems: 'baseline',

@@ -8,7 +8,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { CategoryPill } from '../../components/CategoryPill';
 import { useItemReports } from '../../state/ItemReports';
-import { currentUser } from '../../state/currentUser';
+import { useUserProfile } from '../../state/UserProfile';
 import { getAccentColors } from '../../theme/colors';
 import { getFoundItemCategories, type ItemReport } from '../../utils';
 
@@ -26,9 +26,12 @@ type Draft = Record<(typeof fields)[number]['name'], string>;
 export default function CreateItemPage() {
   const router = useRouter();
   const { saveReport, loading } = useItemReports();
+  const { displayName, loading: loadingProfile } = useUserProfile();
+  const busy = loading || loadingProfile;
   const [status, setStatus] = useState<ItemReport['status'] | null>(null);
   const [category, setCategory] = useState('');
-  const [draft, setDraft] = useState<Draft>({ title: '', location: '', locationDetail: '', description: '', postedBy: currentUser.firstName });
+  const [edits, setDraft] = useState<Partial<Draft>>({});
+  const draft: Draft = { title: '', location: '', locationDetail: '', description: '', postedBy: displayName, ...edits };
   const [photo, setPhoto] = useState<ImagePicker.ImagePickerAsset | null>(null);
   const [error, setError] = useState('');
   const [saving, setSaving] = useState(false);
@@ -56,7 +59,7 @@ export default function CreateItemPage() {
   }
 
   async function submit() {
-    if (savingRef.current || loading) return;
+    if (savingRef.current || busy) return;
 
     const title = draft.title.trim();
     const location = draft.location.trim();
@@ -172,10 +175,10 @@ export default function CreateItemPage() {
           {!!error && <Text accessibilityRole="alert" style={{ color: dark ? '#FECACA' : '#991B1B' }}>{error}</Text>}
           <Pressable
             accessibilityRole="button"
-            accessibilityState={{ disabled: loading || saving, busy: saving }}
-            disabled={loading || saving}
+            accessibilityState={{ disabled: busy || saving, busy: saving }}
+            disabled={busy || saving}
             onPress={submit}
-            style={[styles.primary, { backgroundColor: accent, opacity: loading || saving ? 0.6 : 1 }]}
+            style={[styles.primary, { backgroundColor: accent, opacity: busy || saving ? 0.6 : 1 }]}
           >
             <Text style={[styles.buttonLabel, { color: onAccent }]}>{saving ? 'Saving…' : 'Save report'}</Text>
           </Pressable>
