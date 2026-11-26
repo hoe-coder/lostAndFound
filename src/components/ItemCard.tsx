@@ -45,7 +45,7 @@ export function ItemCard({ item }: { item: ItemReport }) {
             <Pressable
               accessibilityRole="link"
               accessibilityLabel={'View ' + item.title}
-              style={StyleSheet.compose(styles.viewButton, { backgroundColor: accent })}
+              style={StyleSheet.flatten([styles.viewButton, { backgroundColor: accent }])}
             >
               <Text style={[styles.viewLabel, { color: onAccent }]}>View</Text>
             </Pressable>
