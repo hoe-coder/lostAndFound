@@ -70,6 +70,7 @@ export default function StartPage() {
       </View>
 
       <FlatList
+        style={styles.itemList}
         data={items}
         keyExtractor={(item) => item.id}
         keyboardShouldPersistTaps="handled"
@@ -99,14 +100,20 @@ export default function StartPage() {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
+    minHeight: 0,
   },
   filters: {
+    flexShrink: 0,
     gap: 12,
     padding: 16,
     paddingBottom: 12,
   },
   categories: {
     gap: 8,
+  },
+  itemList: {
+    flex: 1,
+    minHeight: 0,
   },
   results: {
     gap: 10,
