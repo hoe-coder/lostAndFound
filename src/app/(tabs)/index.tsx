@@ -1,22 +1,19 @@
-import { Link } from 'expo-router';
 import { useState } from 'react';
 import {
   FlatList,
-  Pressable,
   ScrollView,
   StyleSheet,
   Text,
   View,
   useColorScheme,
 } from 'react-native';
-import { CategoryPill } from '../components/CategoryPill';
-import { ItemCard } from '../components/ItemCard';
-import { ItemStatusFilter, type ItemStatus } from '../components/ItemStatusFilter';
-import { SearchBar } from '../components/SearchBar';
-import { getAccentColors } from '../theme/colors';
-import { useItemReports } from '../state/ItemReports';
-import { AppFooter } from '../layout/FooterBar';
-import { filterItems, getFoundItemCategories, getFoundItems, getLostItems, type ItemReport } from '../utils';
+import { CategoryPill } from '../../components/CategoryPill';
+import { ItemCard } from '../../components/ItemCard';
+import { ItemStatusFilter, type ItemStatus } from '../../components/ItemStatusFilter';
+import { SearchBar } from '../../components/SearchBar';
+import { useItemReports } from '../../state/ItemReports';
+import { AppFooter } from '../../layout/FooterBar';
+import { filterItems, getFoundItemCategories, getFoundItems, getLostItems, type ItemReport } from '../../utils';
 
 const categories = ['', ...getFoundItemCategories()];
 
@@ -42,7 +39,6 @@ export default function StartPage() {
     all: [...lost, ...found].sort((first, second) => Date.parse(second.createdAt) - Date.parse(first.createdAt)),
   };
   const dark = useColorScheme() === 'dark';
-  const { accent, onAccent } = getAccentColors(dark);
   const textColor = dark ? '#F1F5F9' : '#0F172A';
   const mutedColor = dark ? '#CBD5E1' : '#475569';
   const items = itemsByStatus[status];
@@ -51,14 +47,6 @@ export default function StartPage() {
   return (
     <View style={[styles.screen, { backgroundColor: dark ? '#0F172A' : '#F8FAFC' }]}>
       <View style={styles.filters}>
-        <Link href="/items/create" push asChild>
-          <Pressable
-            accessibilityRole="link"
-            style={StyleSheet.flatten([styles.createLink, { backgroundColor: accent }])}
-          >
-            <Text style={[styles.createLabel, { color: onAccent }]}>Report an item</Text>
-          </Pressable>
-        </Link>
         <SearchBar placeholder="Search items, brands, places…" value={query} onChangeText={setQuery} />
         <ItemStatusFilter value={status} counts={counts} onChange={setStatus} />
 
@@ -117,15 +105,6 @@ const styles = StyleSheet.create({
     padding: 16,
     paddingBottom: 12,
   },
-  createLink: {
-    alignSelf: 'flex-end',
-    minHeight: 44,
-    justifyContent: 'center',
-    borderRadius: 22,
-    paddingHorizontal: 16,
-    paddingVertical: 6,
-  },
-  createLabel: { fontSize: 15, fontWeight: '700' },
   categories: {
     gap: 8,
   },

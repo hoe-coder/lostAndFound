@@ -33,7 +33,9 @@
           "cameraPermission": false,
           "microphonePermission": false
         }
-      ]
+      ],
+      "@react-native-vector-icons/ionicons",
+      "expo-font"
     ]
   }
 }

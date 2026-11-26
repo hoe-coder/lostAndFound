@@ -1,6 +1,6 @@
-import { getAccentColors } from '../theme/colors';
+import { getAccentColors } from '../../theme/colors';
 import { Appearance, ScrollView, StyleSheet, Switch, Text, View, useColorScheme } from 'react-native';
-import { AppFooter } from '../layout/FooterBar';
+import { AppFooter } from '../../layout/FooterBar';
 
 export default function ProfilePage() {
   const dark = useColorScheme() === 'dark';
