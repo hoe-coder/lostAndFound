@@ -9,6 +9,7 @@ const entries = [
   { name: 'index', label: 'Home', accessibilityLabel: 'Home feed', icon: 'home-outline', activeIcon: 'home' },
   { name: 'my-reports', label: 'My Reports', accessibilityLabel: 'My Reports', icon: 'clipboard-outline', activeIcon: 'clipboard' },
   { name: 'create', label: 'Add report' },
+  { name: 'inbox', label: 'Inbox', accessibilityLabel: 'Inbox', icon: 'chatbubbles-outline', activeIcon: 'chatbubbles' },
   { name: 'profile', label: 'Profile', accessibilityLabel: 'Profile', icon: 'person-outline', activeIcon: 'person' },
 ] as const;
 

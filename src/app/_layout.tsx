@@ -9,7 +9,7 @@ import { ItemActivityProvider } from '../state/ItemActivity';
 
 export default function RootLayout() {
   const [section] = useSegments();
-  const isItemDetail = section === 'items';
+  const showHeader = section !== 'items' && section !== 'messages';
   const dark = useColorScheme() === 'dark';
   const backgroundColor = dark ? '#0F172A' : '#F8FAFC';
 
@@ -20,7 +20,7 @@ export default function RootLayout() {
           <StatusBar style={dark ? "light" : "dark"} />
 
           <View style={[styles.fill, { backgroundColor }]}>
-            {!isItemDetail && (
+            {showHeader && (
               <HeaderBar
                 title="Lost&Found"
                 action={

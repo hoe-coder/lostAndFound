@@ -13,6 +13,7 @@ export default function MainTabs() {
     >
       <Tabs.Screen name="index" options={{ title: 'Home' }} />
       <Tabs.Screen name="my-reports" options={{ title: 'My Reports' }} />
+      <Tabs.Screen name="inbox" options={{ title: 'Inbox' }} />
       <Tabs.Screen name="profile" options={{ title: 'Profile' }} />
     </Tabs>
   );

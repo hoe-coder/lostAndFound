@@ -1,9 +1,18 @@
+import { randomUUID } from 'expo-crypto';
 import { createContext, useContext, useState, type ReactNode } from 'react';
+
+type LocalMessage = {
+  id: string;
+  body: string;
+  createdAt?: string;
+};
 
 type Activity = {
   favorite?: boolean;
   reported?: boolean;
   claimMessage?: string;
+  claimCreatedAt?: string;
+  replies?: LocalMessage[];
 };
 
 type ItemActivityContextValue = {
@@ -30,14 +39,49 @@ export function ItemActivityProvider({ children }: { children: ReactNode }) {
   );
 }
 
-export function useItemActivity(id: string) {
+function getMessages(activity: Activity): LocalMessage[] {
+  const replies = activity.replies ?? [];
+  if (!activity.claimMessage) return replies;
+  return [{ id: 'return-request', body: activity.claimMessage, createdAt: activity.claimCreatedAt }, ...replies];
+}
+
+function useActivityContext() {
   const context = useContext(ItemActivityContext);
   if (!context) throw new Error('ItemActivityProvider is required.');
 
+  return context;
+}
+
+export function useInboxThreads() {
+  const { activity } = useActivityContext();
+
+  return Object.entries(activity).flatMap(([itemId, item]) => {
+    const latest = item ? getMessages(item).at(-1) : undefined;
+    return latest ? [{ itemId, latest }] : [];
+  }).sort((first, second) =>
+    (second.latest.createdAt ?? '').localeCompare(first.latest.createdAt ?? ''),
+  );
+}
+
+export function useItemActivity(id: string) {
+  const context = useActivityContext();
+  const activity = context.activity[id] ?? {};
+
   return {
-    activity: context.activity[id] ?? {},
+    activity,
+    messages: getMessages(activity),
     toggleFavorite: () => context.update(id, (item) => ({ favorite: !item.favorite })),
     markReported: () => context.update(id, () => ({ reported: true })),
-    saveClaim: (claimMessage: string) => context.update(id, () => ({ claimMessage })),
+    saveClaim: (claimMessage: string) => {
+      const createdAt = new Date().toISOString();
+      context.update(id, (item) => ({ claimMessage, claimCreatedAt: item.claimCreatedAt ?? createdAt }));
+    },
+    addMessage: (body: string) => {
+      const trimmed = body.trim();
+      if (!trimmed) return;
+
+      const message = { id: randomUUID(), body: trimmed, createdAt: new Date().toISOString() };
+      context.update(id, (item) => ({ replies: [...(item.replies ?? []), message] }));
+    },
   };
 }
