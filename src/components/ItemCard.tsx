@@ -16,7 +16,9 @@ export function ItemCard({ item }: { item: ItemReport }) {
   return (
     <View style={[styles.card, { backgroundColor: dark ? '#202020' : '#FFFFFF', borderColor: border }]}>
       <View style={styles.photo}>
-        <Image source={{ uri: item.image }} style={styles.image} accessible={false} />
+        {item.image
+          ? <Image source={{ uri: item.image }} style={styles.image} accessible={false} />
+          : <Text style={styles.noPhoto}>No photo</Text>}
         <View style={styles.favorite}>
           <ItemAction
             label={activity.favorite ? 'Remove from favorites' : 'Add to favorites'}
@@ -45,7 +47,7 @@ export function ItemCard({ item }: { item: ItemReport }) {
             <Pressable
               accessibilityRole="link"
               accessibilityLabel={'View ' + item.title}
-              style={StyleSheet.compose(styles.viewButton, { backgroundColor: accent })}
+              style={StyleSheet.flatten([styles.viewButton, { backgroundColor: accent }])}
             >
               <Text style={[styles.viewLabel, { color: onAccent }]}>View</Text>
             </Pressable>
@@ -58,7 +60,8 @@ export function ItemCard({ item }: { item: ItemReport }) {
 
 const styles = StyleSheet.create({
   card: { flexDirection: 'row', alignItems: 'flex-start', gap: 12, padding: 12, borderWidth: 1, borderRadius: 20 },
-  photo: { width: '29%', aspectRatio: 1, overflow: 'hidden', borderRadius: 14, backgroundColor: '#DCE3EA' },
+  photo: { width: '29%', aspectRatio: 1, overflow: 'hidden', justifyContent: 'center', alignItems: 'center', borderRadius: 14, backgroundColor: '#DCE3EA' },
+  noPhoto: { color: '#475569', fontSize: 12 },
   image: { width: '100%', height: '100%' },
   favorite: { position: 'absolute', top: 5, start: 5 },
   details: { flex: 1, minWidth: 0, gap: 5 },

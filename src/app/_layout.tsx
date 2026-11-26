@@ -4,6 +4,7 @@ import { StyleSheet, View, useColorScheme } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { UserInfo } from '../components/UserInfo';
 import { HeaderBar } from '../layout/HeaderBar';
+import { ItemReportsProvider } from '../state/ItemReports';
 import { ItemActivityProvider } from '../state/ItemActivity';
 
 export default function RootLayout() {
@@ -14,27 +15,29 @@ export default function RootLayout() {
 
   return (
     <ItemActivityProvider>
-      <SafeAreaProvider>
-        <StatusBar style={dark ? "light" : "dark"} />
+      <ItemReportsProvider>
+        <SafeAreaProvider>
+          <StatusBar style={dark ? "light" : "dark"} />
 
-        <View style={[styles.fill, { backgroundColor }]}>
-          {!isItemDetail && (
-            <HeaderBar
-              title="Lost&Found"
-              action={
-                <UserInfo
-                  firstName="Hüseyin"
-                  image="https://randomuser.me/api/portraits/men/75.jpg"
-                />
-              }
-            />
-          )}
+          <View style={[styles.fill, { backgroundColor }]}>
+            {!isItemDetail && (
+              <HeaderBar
+                title="Lost&Found"
+                action={
+                  <UserInfo
+                    firstName="Hüseyin"
+                    image="https://randomuser.me/api/portraits/men/75.jpg"
+                  />
+                }
+              />
+            )}
 
-          <View style={styles.fill}>
-            <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor } }} />
+            <View style={styles.fill}>
+              <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor } }} />
+            </View>
           </View>
-        </View>
-      </SafeAreaProvider>
+        </SafeAreaProvider>
+      </ItemReportsProvider>
     </ItemActivityProvider>
   );
 }

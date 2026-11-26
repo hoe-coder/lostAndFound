@@ -2,6 +2,7 @@ import { getAccentColors } from '../../theme/colors';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useRef, useState, type ComponentRef } from 'react';
 import {
+  ActivityIndicator,
   Alert,
   Image,
   Pressable,
@@ -15,6 +16,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ItemAction } from '../../components/ItemAction';
+import { useItemReports } from '../../state/ItemReports';
 import { useItemActivity } from '../../state/ItemActivity';
 import { getItemById, type ItemReport } from '../../utils';
 
@@ -22,11 +24,22 @@ export default function ItemDetailPage() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const router = useRouter();
   const dark = useColorScheme() === 'dark';
-  const item = typeof id === 'string' ? getItemById(id) : undefined;
+  const { reports, loading } = useItemReports();
+  const item = typeof id === 'string'
+    ? reports.find((report) => report.id === id) ?? getItemById(id)
+    : undefined;
 
   function goBack() {
     if (router.canGoBack()) router.back();
     else router.replace('/');
+  }
+
+  if (!item && loading) {
+    return (
+      <SafeAreaView style={[styles.empty, { backgroundColor: dark ? '#141414' : '#F8FAFC' }]}>
+        <ActivityIndicator accessibilityLabel="Loading report" color={getAccentColors(dark).accent} />
+      </SafeAreaView>
+    );
   }
 
   if (!item) {
@@ -90,13 +103,17 @@ function ItemDetail({ item, dark, goBack }: { item: ItemReport; dark: boolean; g
         style={styles.scroll}
       >
         <View style={styles.hero}>
-          <Image
-            source={{ uri: item.image }}
-            style={styles.heroImage}
-            resizeMode="contain"
-            accessibilityLabel={item.title}
-            accessible
-          />
+          {item.image ? (
+            <Image
+              source={{ uri: item.image }}
+              style={styles.heroImage}
+              resizeMode="contain"
+              accessibilityLabel={item.title}
+              accessible
+            />
+          ) : (
+            <Text style={styles.noPhoto}>No photo</Text>
+          )}
           <View style={styles.toolbar}>
             <ItemAction label="Back to items" symbol="‹" onPress={goBack} />
             <View style={styles.toolbarActions}>
@@ -127,7 +144,7 @@ function ItemDetail({ item, dark, goBack }: { item: ItemReport; dark: boolean; g
           <View style={[styles.info, { backgroundColor: surface, borderColor: border }]}>
             <View style={styles.place}>
               <Text style={[styles.location, { color: text }]}>{item.location}</Text>
-              <Text style={{ color: muted }}>{item.locationDetail}</Text>
+              {!!item.locationDetail && <Text style={{ color: muted }}>{item.locationDetail}</Text>}
             </View>
             <Text style={[styles.body, { color: text }]}>{postedAt}</Text>
             <Text style={[styles.body, { color: text }]}>Posted by {item.postedBy}</Text>
@@ -197,7 +214,8 @@ const styles = StyleSheet.create({
   screen: { flex: 1 },
   scroll: { flex: 1 },
   empty: { flex: 1, padding: 24, gap: 20 },
-  hero: { aspectRatio: 1.45, backgroundColor: '#DEE7EB' },
+  hero: { aspectRatio: 1.45, justifyContent: 'center', alignItems: 'center', backgroundColor: '#DEE7EB' },
+  noPhoto: { color: '#475569', fontSize: 15 },
   heroImage: { width: '100%', height: '100%' },
   toolbar: {
     position: 'absolute', top: 12, start: 12, end: 12,

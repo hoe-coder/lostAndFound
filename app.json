@@ -25,7 +25,15 @@
       "expo-router",
       "expo-status-bar",
       "expo-image",
-      "expo-splash-screen"
+      "expo-splash-screen",
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Choose a photo to attach to your Lost & Found report.",
+          "cameraPermission": false,
+          "microphonePermission": false
+        }
+      ]
     ]
   }
 }

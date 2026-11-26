@@ -45,10 +45,10 @@ export function formatItemAge(createdAt: string, now = Date.now()): string {
   return days + (days === 1 ? ' day ago' : ' days ago');
 }
 
-function filterItems(
-  items: Item[],
+export function filterItems<T extends Item>(
+  items: readonly T[],
   { category, query, fromDate, toDate }: ItemFilters = {},
-): Item[] {
+): T[] {
   const searchTerm = query?.trim().toLowerCase();
 
   return items.filter((item) => {
