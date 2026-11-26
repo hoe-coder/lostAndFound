@@ -17,7 +17,8 @@ export function FooterBar({ heading, children }: FooterBarProps) {
         styles.footer,
         {
           backgroundColor: dark ? '#0F172A' : '#FFFFFF',
-          borderTopColor: dark ? '#334155' : '#E2E8F0',
+          borderBottomColor: dark ? '#334155' : '#E2E8F0',
+          borderTopWidth: 1,
         },
       ]}
     >

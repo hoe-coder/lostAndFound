@@ -4,6 +4,8 @@
 node_modules/
 
 # Expo
+.DS_Store
+.idea/
 .expo/
 dist/
 web-build/

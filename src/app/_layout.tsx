@@ -28,7 +28,7 @@ export default function RootLayout() {
           <Slot />
         </View>
 
-        <FooterBar heading="Browse Lost & Found">
+        <FooterBar heading="Lost & Found">
           <Button title="Home" onPress={() => router.navigate('/')} />
           <Button title="Found Items" onPress={() => router.navigate('/found')} />
         </FooterBar>
@@ -38,5 +38,5 @@ export default function RootLayout() {
 }
 
 const styles = StyleSheet.create({
-  fill: { flex: 1 },
+  fill: { flex: 1 }
 });
