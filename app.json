@@ -4,7 +4,7 @@
     "slug": "lostAndFound",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/logo.svg",
+    "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
     "ios": {
       "supportsTablet": true
@@ -25,7 +25,14 @@
       "expo-router",
       "expo-status-bar",
       "expo-image",
-      "expo-splash-screen",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/splash-icon.png",
+          "imageWidth": 200,
+          "backgroundColor": "#E6F4FE"
+        }
+      ],
       [
         "expo-image-picker",
         {
