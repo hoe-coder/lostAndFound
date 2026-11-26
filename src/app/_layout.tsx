@@ -6,6 +6,7 @@ import { UserInfo } from '../components/UserInfo';
 import { HeaderBar } from '../layout/HeaderBar';
 import { ItemReportsProvider } from '../state/ItemReports';
 import { ItemActivityProvider } from '../state/ItemActivity';
+import { currentUser } from '../state/currentUser';
 
 export default function RootLayout() {
   const [section] = useSegments();
@@ -25,8 +26,8 @@ export default function RootLayout() {
                 title="Lost&Found"
                 action={
                   <UserInfo
-                    firstName="Hüseyin"
-                    image="https://randomuser.me/api/portraits/men/75.jpg"
+                    firstName={currentUser.firstName}
+                    image={currentUser.avatar}
                   />
                 }
               />

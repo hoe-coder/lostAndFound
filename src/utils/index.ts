@@ -31,6 +31,18 @@ export function getLostItems(filters?: ItemFilters): LostItem[] {
   return filterItems(lostItems, filters);
 }
 
+export function getReportsByUserId(userId: string, localReports: readonly ItemReport[]): ItemReport[] {
+  const lost = lostItems
+    .filter((item) => item.userId === userId)
+    .map<ItemReport>((item) => ({ ...item, status: 'Lost' }));
+  const found = foundItems
+    .filter((item) => item.userId === userId)
+    .map<ItemReport>((item) => ({ ...item, status: 'Found' }));
+
+  return [...localReports.filter((item) => item.userId === userId), ...lost, ...found]
+    .sort((first, second) => second.createdAt.localeCompare(first.createdAt));
+}
+
 export function getItemById(id: string): ItemReport | undefined {
   const lost = lostItems.find((item) => item.id === id);
   if (lost) return { ...lost, status: 'Lost' };

@@ -4,10 +4,14 @@ import { Directory, File, Paths } from 'expo-file-system';
 import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
 import { Platform } from 'react-native';
 import type { ItemReport } from '../utils';
+import { currentUser } from './currentUser';
 
-type ReportInput = Omit<ItemReport, 'id' | 'createdAt' | 'image'>;
+type ReportInput = Omit<ItemReport, 'id' | 'createdAt' | 'image' | 'userId'>;
 type ReportPhoto = { uri: string; base64?: string | null };
-type StoredReport = Omit<ItemReport, 'image'> & { photo: string | null };
+type StoredReport = Omit<ItemReport, 'image' | 'userId'> & {
+  photo: string | null;
+  userId?: ItemReport['userId'];
+};
 
 type ItemReportsContextValue = {
   reports: ItemReport[];
@@ -25,6 +29,8 @@ function photoDirectory() {
 function toItemReport({ photo, ...report }: StoredReport): ItemReport {
   return {
     ...report,
+    // Older local reports were all created under the single demo profile.
+    userId: report.userId ?? currentUser.id,
     image: !photo || Platform.OS === 'web' ? photo ?? '' : new File(photoDirectory(), photo).uri,
   };
 }
@@ -60,7 +66,13 @@ export function ItemReportsProvider({ children }: { children: ReactNode }) {
   async function saveReport(input: ReportInput, photo: ReportPhoto | null): Promise<ItemReport> {
     const id = input.status.toLowerCase() + '-' + randomUUID();
     let photoFile: File | undefined;
-    const record: StoredReport = { ...input, id, createdAt: new Date().toISOString(), photo: null };
+    const record: StoredReport = {
+      ...input,
+      id,
+      userId: currentUser.id,
+      createdAt: new Date().toISOString(),
+      photo: null,
+    };
 
     try {
       if (photo && Platform.OS === 'web') {

@@ -8,7 +8,8 @@
     "description": "Found in a black carrying case on a desk in the campus library.",
     "location": "Campus library",
     "locationDetail": "On a study desk",
-    "postedBy": "Mira"
+    "postedBy": "Mira",
+    "userId": "user-mira"
   },
   {
     "id": "found-blue-water-bottle",
@@ -19,7 +20,8 @@
     "description": "A blue metal bottle with a white lid was left on a bench near the gym entrance.",
     "location": "Sports centre",
     "locationDetail": "Bench by the gym entrance",
-    "postedBy": "Emil"
+    "postedBy": "Hüseyin",
+    "userId": "user-huseyin"
   },
   {
     "id": "found-red-lanyard-keys",
@@ -30,7 +32,8 @@
     "description": "A small set of keys on a red campus lanyard was found outside the cafeteria.",
     "location": "Cafeteria",
     "locationDetail": "Outside the main doors",
-    "postedBy": "Lina"
+    "postedBy": "Lina",
+    "userId": "user-lina"
   },
   {
     "id": "found-gray-hoodie",
@@ -41,7 +44,8 @@
     "description": "A gray hoodie was left on a chair in the student lounge.",
     "location": "Student lounge",
     "locationDetail": "On a chair by the seating area",
-    "postedBy": "Noah"
+    "postedBy": "Noah",
+    "userId": "user-noah"
   },
   {
     "id": "found-green-notebook",
@@ -52,6 +56,7 @@
     "description": "An A5 notebook with a green cover was found in a lecture hall.",
     "location": "Main building",
     "locationDetail": "In a lecture hall",
-    "postedBy": "Sofia"
+    "postedBy": "Sofia",
+    "userId": "user-sofia"
   }
 ]

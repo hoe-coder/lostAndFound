@@ -8,7 +8,8 @@
     "description": "I may have left a navy backpack with an orange zipper pull near the library printers.",
     "location": "Campus library",
     "locationDetail": "Near the printers",
-    "postedBy": "Lina"
+    "postedBy": "Lina",
+    "userId": "user-lina"
   },
   {
     "id": "lost-student-id",
@@ -19,7 +20,8 @@
     "description": "My student ID slipped out of my pocket between the cafeteria and the main lecture hall.",
     "location": "Main building",
     "locationDetail": "Walkway from the cafeteria to the lecture hall",
-    "postedBy": "Noah"
+    "postedBy": "Noah",
+    "userId": "user-noah"
   },
   {
     "id": "lost-usb-c-drive",
@@ -30,7 +32,8 @@
     "description": "I last used this flash drive at a shared computer in the media lab.",
     "location": "Media lab",
     "locationDetail": "At a shared computer",
-    "postedBy": "Mira"
+    "postedBy": "Mira",
+    "userId": "user-mira"
   },
   {
     "id": "lost-black-umbrella",
@@ -41,7 +44,8 @@
     "description": "I left a compact black umbrella with a wooden handle near the entrance to Building B.",
     "location": "Building B",
     "locationDetail": "By the main entrance",
-    "postedBy": "Emil"
+    "postedBy": "Emil",
+    "userId": "user-emil"
   },
   {
     "id": "lost-red-pencil-case",
@@ -52,7 +56,8 @@
     "description": "I may have dropped a red fabric pencil case in the study room upstairs.",
     "location": "Study centre",
     "locationDetail": "Upstairs study room",
-    "postedBy": "Sofia"
+    "postedBy": "Hüseyin",
+    "userId": "user-huseyin"
   },
   {
     "id": "lost-scientific-calculator",
@@ -63,6 +68,7 @@
     "description": "Grey calculator with a small scratch on the back cover. I left it in the lab room in a hurry before the deadline.",
     "location": "Lab building",
     "locationDetail": "Room 2.14, desk by the door",
-    "postedBy": "Deniz"
+    "postedBy": "Deniz",
+    "userId": "user-deniz"
   }
 ]

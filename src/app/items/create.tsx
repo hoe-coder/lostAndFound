@@ -8,6 +8,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { CategoryPill } from '../../components/CategoryPill';
 import { useItemReports } from '../../state/ItemReports';
+import { currentUser } from '../../state/currentUser';
 import { getAccentColors } from '../../theme/colors';
 import { getFoundItemCategories, type ItemReport } from '../../utils';
 
@@ -27,7 +28,7 @@ export default function CreateItemPage() {
   const { saveReport, loading } = useItemReports();
   const [status, setStatus] = useState<ItemReport['status'] | null>(null);
   const [category, setCategory] = useState('');
-  const [draft, setDraft] = useState<Draft>({ title: '', location: '', locationDetail: '', description: '', postedBy: '' });
+  const [draft, setDraft] = useState<Draft>({ title: '', location: '', locationDetail: '', description: '', postedBy: currentUser.firstName });
   const [photo, setPhoto] = useState<ImagePicker.ImagePickerAsset | null>(null);
   const [error, setError] = useState('');
   const [saving, setSaving] = useState(false);
