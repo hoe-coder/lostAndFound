@@ -1,9 +1,9 @@
-import { useRouter } from 'expo-router';
+import { Link } from 'expo-router';
 import { Children, type ReactNode } from 'react';
-import { Button, Platform, StyleSheet, View, useColorScheme } from 'react-native';
+import { Pressable, StyleSheet, Text, View, useColorScheme } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { BrandLogo } from '../components/BrandLogo';
-import { brandAccent, brandAccentOnDark } from '../theme/colors';
+import { getAccentColors } from '../theme/colors';
 
 type FooterBarProps = {
   heading: string;
@@ -39,16 +39,23 @@ export function FooterBar({ heading, children }: FooterBarProps) {
 }
 
 export function AppFooter() {
-  const router = useRouter();
-  const dark = useColorScheme() === 'dark';
-  const footerButtonColor = dark && Platform.OS !== 'android' ? brandAccentOnDark : brandAccent;
+  const { accent } = getAccentColors(useColorScheme() === 'dark');
+  const links = [
+    { title: 'Home', href: '/' },
+    { title: 'Found Items', href: '/found' },
+    { title: 'Lost Items', href: '/lost' },
+    { title: 'Profile', href: '/profile' },
+  ] as const;
 
   return (
     <FooterBar heading="Lost & Found">
-      <Button color={footerButtonColor} title="Home" onPress={() => router.navigate('/')} />
-      <Button color={footerButtonColor} title="Found Items" onPress={() => router.navigate('/found')} />
-      <Button color={footerButtonColor} title="Lost Items" onPress={() => router.navigate('/lost')} />
-      <Button color={footerButtonColor} title="Profile" onPress={() => router.navigate('/profile')} />
+      {links.map(({ title, href }) => (
+        <Link key={href} href={href} asChild>
+          <Pressable accessibilityRole="link" style={styles.link}>
+            <Text style={[styles.linkLabel, { color: accent }]}>{title}</Text>
+          </Pressable>
+        </Link>
+      ))}
     </FooterBar>
   );
 }
@@ -66,6 +73,14 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     paddingHorizontal: 16,
     paddingVertical: 4,
+  },
+  link: {
+    minHeight: 44,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  linkLabel: {
+    fontSize: 16,
   },
   linkCell: {
     width: '50%',

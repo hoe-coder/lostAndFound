@@ -5,7 +5,7 @@ node_modules/
 
 # Expo
 .DS_Store
-.idea/
+/.idea
 .expo/
 dist/
 web-build/
@@ -41,3 +41,4 @@ yarn-error.*
 # generated native folders
 /ios
 /android
+/.ai

@@ -1,4 +1,4 @@
-import { brandAccent, brandAccentOnDark } from '../theme/colors';
+import { getAccentColors } from '../theme/colors';
 import { Pressable, StyleSheet, Text, useColorScheme } from 'react-native';
 
 type CategoryPillProps = {
@@ -9,6 +9,7 @@ type CategoryPillProps = {
 
 export function CategoryPill({ label, selected, onPress }: CategoryPillProps) {
   const dark = useColorScheme() === 'dark';
+  const { accent, onAccent } = getAccentColors(dark);
 
   return (
     <Pressable
@@ -18,13 +19,13 @@ export function CategoryPill({ label, selected, onPress }: CategoryPillProps) {
       style={({ pressed }) => [
         styles.pill,
         {
-          backgroundColor: selected ? brandAccent : dark ? '#1E293B' : '#FFFFFF',
-          borderColor: selected ? (dark ? brandAccentOnDark : brandAccent) : dark ? '#475569' : '#CBD5E1',
+          backgroundColor: selected ? accent : dark ? '#1E293B' : '#FFFFFF',
+          borderColor: selected ? accent : dark ? '#475569' : '#CBD5E1',
           opacity: pressed ? 0.75 : 1,
         },
       ]}
     >
-      <Text style={{ color: selected || dark ? '#FFFFFF' : '#0F172A' }}>{label}</Text>
+      <Text style={{ color: selected ? onAccent : dark ? '#FFFFFF' : '#0F172A' }}>{label}</Text>
     </Pressable>
   );
 }

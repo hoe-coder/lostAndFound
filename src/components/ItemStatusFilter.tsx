@@ -1,4 +1,4 @@
-import { brandAccent, brandAccentOnDark } from '../theme/colors';
+import { getAccentColors } from '../theme/colors';
 import { Pressable, StyleSheet, Text, View, useColorScheme } from 'react-native';
 
 const options = [
@@ -17,6 +17,7 @@ type ItemStatusFilterProps = {
 
 export function ItemStatusFilter({ value, counts, onChange }: ItemStatusFilterProps) {
   const dark = useColorScheme() === 'dark';
+  const { accent, onAccent } = getAccentColors(dark);
 
   return (
     <View
@@ -37,20 +38,19 @@ export function ItemStatusFilter({ value, counts, onChange }: ItemStatusFilterPr
             onPress={() => onChange(option.value)}
             style={({ pressed }) => [
               styles.segment,
-              selected && styles.selected,
-              selected && dark && { borderColor: brandAccentOnDark },
+              selected && { backgroundColor: accent },
               pressed && styles.pressed,
             ]}
           >
             <Text
               style={[
                 styles.label,
-                { color: selected ? '#FFFFFF' : dark ? '#C4C4C4' : '#334155' },
+                { color: selected ? onAccent : dark ? '#C4C4C4' : '#334155' },
                 selected && styles.selectedLabel,
               ]}
             >
               {option.label}{' '}
-              <Text style={{ color: selected ? '#FFFFFF' : dark ? '#A3A3A3' : '#475569' }}>
+              <Text style={{ color: selected ? onAccent : dark ? '#A3A3A3' : '#475569' }}>
                 {count}
               </Text>
             </Text>
@@ -75,11 +75,6 @@ const styles = StyleSheet.create({
     borderRadius: 22,
     paddingHorizontal: 4,
     paddingVertical: 6,
-  },
-  selected: {
-    backgroundColor: brandAccent,
-    borderWidth: StyleSheet.hairlineWidth,
-    borderColor: brandAccent,
   },
   pressed: {
     opacity: 0.7,

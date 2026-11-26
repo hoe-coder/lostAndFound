@@ -1,4 +1,4 @@
-import { brandAccent } from '../theme/colors';
+import { getAccentColors } from '../theme/colors';
 import { Appearance, ScrollView, StyleSheet, Switch, Text, View, useColorScheme } from 'react-native';
 import { AppFooter } from '../layout/FooterBar';
 
@@ -27,7 +27,7 @@ export default function ProfilePage() {
             accessibilityLabel="Dark mode"
             value={dark}
             onValueChange={(enabled) => Appearance.setColorScheme(enabled ? 'dark' : 'light')}
-            trackColor={{ true: brandAccent }}
+            trackColor={{ true: getAccentColors(dark).accent }}
           />
         </View>
       </View>

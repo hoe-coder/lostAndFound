@@ -1,4 +1,4 @@
-import { brandAccent } from '../../theme/colors';
+import { getAccentColors } from '../../theme/colors';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useRef, useState, type ComponentRef } from 'react';
 import {
@@ -48,6 +48,7 @@ function ItemDetail({ item, dark, goBack }: { item: ItemReport; dark: boolean; g
   const [editingMessage, setEditingMessage] = useState(false);
   const [message, setMessage] = useState('');
   const scroll = useRef<ComponentRef<typeof ScrollView>>(null);
+  const { accent, onAccent } = getAccentColors(dark);
   const text = dark ? '#F8FAFC' : '#0F172A';
   const muted = dark ? '#B8B8B8' : '#475569';
   const border = dark ? '#424242' : '#CBD5E1';
@@ -170,6 +171,7 @@ function ItemDetail({ item, dark, goBack }: { item: ItemReport; dark: boolean; g
           disabled={editingMessage && !message.trim()}
           style={[
             styles.primary,
+            { backgroundColor: accent },
             editingMessage && !message.trim() && styles.disabled,
           ]}
           onPress={() => {
@@ -182,7 +184,7 @@ function ItemDetail({ item, dark, goBack }: { item: ItemReport; dark: boolean; g
             }
           }}
         >
-          <Text style={[styles.buttonLabel, styles.primaryLabel]}>
+          <Text style={[styles.buttonLabel, { color: onAccent }]}>
             {editingMessage ? 'Save message' : savedMessage ? 'Edit message' : actionLabel}
           </Text>
         </Pressable>
@@ -215,9 +217,8 @@ const styles = StyleSheet.create({
   note: { borderWidth: 1, borderRadius: 14, padding: 12, fontSize: 14, lineHeight: 20 },
   input: { minHeight: 90, textAlignVertical: 'top', padding: 10, borderWidth: 1, borderRadius: 12, fontSize: 16 },
   footer: { flexDirection: 'row', gap: 8, borderTopWidth: StyleSheet.hairlineWidth, paddingHorizontal: 18, paddingVertical: 10 },
-  primary: { backgroundColor: brandAccent, flex: 1, minHeight: 48, justifyContent: 'center', alignItems: 'center', borderRadius: 24, paddingHorizontal: 12 },
+  primary: { flex: 1, minHeight: 48, justifyContent: 'center', alignItems: 'center', borderRadius: 24, paddingHorizontal: 12 },
   cancel: { minHeight: 48, justifyContent: 'center', paddingHorizontal: 12 },
   buttonLabel: { fontSize: 16, fontWeight: '700' },
-  primaryLabel: { color: '#FFFFFF' },
   disabled: { opacity: 0.5 },
 });

@@ -1,5 +1,5 @@
-import { brandAccent } from '../theme/colors';
-import { Pressable, StyleSheet, Text } from 'react-native';
+import { getAccentColors } from '../theme/colors';
+import { Pressable, StyleSheet, Text, useColorScheme } from 'react-native';
 
 type ItemActionProps = {
   label: string;
@@ -9,15 +9,17 @@ type ItemActionProps = {
 };
 
 export function ItemAction({ label, symbol, onPress, active }: ItemActionProps) {
+  const { accent, onAccent } = getAccentColors(useColorScheme() === 'dark');
+
   return (
     <Pressable
       accessibilityRole="button"
       accessibilityLabel={label}
       accessibilityState={active === undefined ? undefined : { selected: active }}
       onPress={onPress}
-      style={({ pressed }) => [styles.button, active && styles.active, { opacity: pressed ? 0.75 : 1 }]}
+      style={({ pressed }) => [styles.button, active && { backgroundColor: accent }, { opacity: pressed ? 0.75 : 1 }]}
     >
-      <Text style={styles.symbol}>{symbol}</Text>
+      <Text style={[styles.symbol, { color: active ? onAccent : '#FFFFFF' }]}>{symbol}</Text>
     </Pressable>
   );
 }
@@ -31,9 +33,7 @@ const styles = StyleSheet.create({
     borderRadius: 22,
     backgroundColor: 'rgba(15, 23, 42, 0.82)',
   },
-  active: { backgroundColor: brandAccent },
   symbol: {
-    color: '#FFFFFF',
     fontSize: 24,
     fontWeight: '500',
   },
