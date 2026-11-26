@@ -1,3 +1,4 @@
+import { Link } from 'expo-router';
 import type { ReactNode } from 'react';
 import {
   I18nManager,
@@ -8,6 +9,7 @@ import {
   useColorScheme,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { BrandLogo } from '../components/BrandLogo';
 
 type HeaderBarProps = {
   title: string;
@@ -48,13 +50,17 @@ export function HeaderBar({ title, onBack, action }: HeaderBarProps) {
           </Pressable>
         )}
 
-        <Text
-          accessibilityRole="header"
-          numberOfLines={1}
-          style={[styles.title, { color }]}
-        >
-          {title}
-        </Text>
+        <View style={styles.brand}>
+          <Link href="/" asChild>
+            <Pressable
+              accessibilityRole="link"
+              accessibilityLabel={title + ', home'}
+              style={styles.brandLink}
+            >
+              <BrandLogo />
+            </Pressable>
+          </Link>
+        </View>
 
         {action}
       </View>
@@ -83,10 +89,14 @@ const styles = StyleSheet.create({
   arrow: {
     fontSize: 24,
   },
-  title: {
+  brand: {
     flex: 1,
+    alignItems: 'flex-start',
     paddingEnd: 8,
-    fontSize: 20,
-    fontWeight: '600',
+  },
+  brandLink: {
+    minHeight: 44,
+    maxWidth: '100%',
+    justifyContent: 'center',
   },
 });

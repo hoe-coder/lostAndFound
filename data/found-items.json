@@ -1,0 +1,57 @@
+[
+  {
+    "id": "found-wireless-headphones",
+    "title": "Black wireless headphones",
+    "createdAt": "2026-11-26T08:30:00Z",
+    "category": "Electronics",
+    "image": "https://placehold.co/640x400/DBEAFE/1E3A8A.png?text=Headphones",
+    "description": "Found in a black carrying case on a desk in the campus library.",
+    "location": "Campus library",
+    "locationDetail": "On a study desk",
+    "postedBy": "Mira"
+  },
+  {
+    "id": "found-blue-water-bottle",
+    "title": "Blue reusable water bottle",
+    "createdAt": "2026-11-25T14:10:00Z",
+    "category": "Drinkware",
+    "image": "https://placehold.co/640x400/CFFAFE/164E63.png?text=Water+Bottle",
+    "description": "A blue metal bottle with a white lid was left on a bench near the gym entrance.",
+    "location": "Sports centre",
+    "locationDetail": "Bench by the gym entrance",
+    "postedBy": "Emil"
+  },
+  {
+    "id": "found-red-lanyard-keys",
+    "title": "Keys on a red lanyard",
+    "createdAt": "2026-11-24T11:45:00Z",
+    "category": "Keys",
+    "image": "https://placehold.co/640x400/FEE2E2/7F1D1D.png?text=Keys",
+    "description": "A small set of keys on a red campus lanyard was found outside the cafeteria.",
+    "location": "Cafeteria",
+    "locationDetail": "Outside the main doors",
+    "postedBy": "Lina"
+  },
+  {
+    "id": "found-gray-hoodie",
+    "title": "Gray zip-up hoodie",
+    "createdAt": "2026-11-23T16:20:00Z",
+    "category": "Clothing",
+    "image": "https://placehold.co/640x400/E2E8F0/334155.png?text=Hoodie",
+    "description": "A gray hoodie was left on a chair in the student lounge.",
+    "location": "Student lounge",
+    "locationDetail": "On a chair by the seating area",
+    "postedBy": "Noah"
+  },
+  {
+    "id": "found-green-notebook",
+    "title": "Green spiral notebook",
+    "createdAt": "2026-11-22T09:05:00Z",
+    "category": "Stationery",
+    "image": "https://placehold.co/640x400/DCFCE7/14532D.png?text=Notebook",
+    "description": "An A5 notebook with a green cover was found in a lecture hall.",
+    "location": "Main building",
+    "locationDetail": "In a lecture hall",
+    "postedBy": "Sofia"
+  }
+]

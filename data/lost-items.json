@@ -1,0 +1,68 @@
+[
+  {
+    "id": "lost-navy-backpack",
+    "title": "Navy laptop backpack",
+    "createdAt": "2026-11-26T09:10:00Z",
+    "category": "Bags",
+    "image": "https://placehold.co/640x400/DBEAFE/1E3A8A.png?text=Laptop+Backpack",
+    "description": "I may have left a navy backpack with an orange zipper pull near the library printers.",
+    "location": "Campus library",
+    "locationDetail": "Near the printers",
+    "postedBy": "Lina"
+  },
+  {
+    "id": "lost-student-id",
+    "title": "Student ID in a clear holder",
+    "createdAt": "2026-11-25T15:35:00Z",
+    "category": "ID Cards",
+    "image": "https://placehold.co/640x400/FEF3C7/78350F.png?text=Student+ID",
+    "description": "My student ID slipped out of my pocket between the cafeteria and the main lecture hall.",
+    "location": "Main building",
+    "locationDetail": "Walkway from the cafeteria to the lecture hall",
+    "postedBy": "Noah"
+  },
+  {
+    "id": "lost-usb-c-drive",
+    "title": "Silver USB-C flash drive",
+    "createdAt": "2026-11-24T12:15:00Z",
+    "category": "Electronics",
+    "image": "https://placehold.co/640x400/E2E8F0/334155.png?text=USB-C+Drive",
+    "description": "I last used this flash drive at a shared computer in the media lab.",
+    "location": "Media lab",
+    "locationDetail": "At a shared computer",
+    "postedBy": "Mira"
+  },
+  {
+    "id": "lost-black-umbrella",
+    "title": "Foldable black umbrella",
+    "createdAt": "2026-11-23T16:40:00Z",
+    "category": "Accessories",
+    "image": "https://placehold.co/640x400/F3E8FF/581C87.png?text=Umbrella",
+    "description": "I left a compact black umbrella with a wooden handle near the entrance to Building B.",
+    "location": "Building B",
+    "locationDetail": "By the main entrance",
+    "postedBy": "Emil"
+  },
+  {
+    "id": "lost-red-pencil-case",
+    "title": "Red pencil case",
+    "createdAt": "2026-11-22T10:05:00Z",
+    "category": "Stationery",
+    "image": "https://placehold.co/640x400/FEE2E2/7F1D1D.png?text=Pencil+Case",
+    "description": "I may have dropped a red fabric pencil case in the study room upstairs.",
+    "location": "Study centre",
+    "locationDetail": "Upstairs study room",
+    "postedBy": "Sofia"
+  },
+  {
+    "id": "lost-scientific-calculator",
+    "title": "Scientific calculator",
+    "createdAt": "2026-11-04T17:41:00Z",
+    "category": "Electronics",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/1/18/Casio_FX-82MS.jpg",
+    "description": "Grey calculator with a small scratch on the back cover. I left it in the lab room in a hurry before the deadline.",
+    "location": "Lab building",
+    "locationDetail": "Room 2.14, desk by the door",
+    "postedBy": "Deniz"
+  }
+]

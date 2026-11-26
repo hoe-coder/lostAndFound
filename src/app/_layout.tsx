@@ -1,39 +1,41 @@
-import { Slot, useRouter } from 'expo-router';
+import { Stack, useSegments } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import {Button, StyleSheet, Text, View} from 'react-native';
+import { StyleSheet, View, useColorScheme } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { UserInfo } from '../components/UserInfo';
-import { FooterBar } from '../layout/FooterBar';
 import { HeaderBar } from '../layout/HeaderBar';
+import { ItemActivityProvider } from '../state/ItemActivity';
 
 export default function RootLayout() {
-  const router = useRouter();
+  const [section] = useSegments();
+  const isItemDetail = section === 'items';
+  const dark = useColorScheme() === 'dark';
+  const backgroundColor = dark ? '#0F172A' : '#F8FAFC';
 
   return (
-    <SafeAreaProvider>
-      <StatusBar style="auto" />
+    <ItemActivityProvider>
+      <SafeAreaProvider>
+        <StatusBar style={dark ? "light" : "dark"} />
 
-      <View style={styles.fill}>
-        <HeaderBar
-          title="Lost&Found"
-          action={
-            <UserInfo
-              firstName="Hüseyin"
-              image="'https://randomuser.me/api/portraits/men/75.jpg"
+        <View style={[styles.fill, { backgroundColor }]}>
+          {!isItemDetail && (
+            <HeaderBar
+              title="Lost&Found"
+              action={
+                <UserInfo
+                  firstName="Hüseyin"
+                  image="https://randomuser.me/api/portraits/men/75.jpg"
+                />
+              }
             />
-          }
-        />
+          )}
 
-        <View style={styles.fill}>
-          <Slot />
+          <View style={styles.fill}>
+            <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor } }} />
+          </View>
         </View>
-
-        <FooterBar heading="Lost & Found">
-          <Button title="Home" onPress={() => router.navigate('/')} />
-          <Button title="Found Items" onPress={() => router.navigate('/found')} />
-        </FooterBar>
-      </View>
-    </SafeAreaProvider>
+      </SafeAreaProvider>
+    </ItemActivityProvider>
   );
 }
 

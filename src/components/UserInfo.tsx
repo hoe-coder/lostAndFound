@@ -1,10 +1,10 @@
+import { Link } from 'expo-router';
 import {
   Image,
+  Pressable,
   StyleSheet,
   Text,
-  View,
   useColorScheme,
-  type ImageSourcePropType,
 } from 'react-native';
 
 type UserInfoProps = {
@@ -16,12 +16,18 @@ export function UserInfo({ firstName, image }: UserInfoProps) {
   const textColor = useColorScheme() === 'dark' ? '#F1F5F9' : '#0F172A';
 
   return (
-    <View style={styles.row}>
-      <Image src={image} style={styles.avatar} resizeMode="cover" />
-      <Text numberOfLines={1} style={[styles.name, { color: textColor }]}>
-        {firstName}
-      </Text>
-    </View>
+    <Link href="/profile" asChild>
+      <Pressable
+        accessibilityRole="link"
+        accessibilityLabel={'View profile for ' + firstName}
+        style={styles.row}
+      >
+        <Image src={image} accessible={false} style={styles.avatar} resizeMode="cover" />
+        <Text numberOfLines={1} style={[styles.name, { color: textColor }]}>
+          {firstName}
+        </Text>
+      </Pressable>
+    </Link>
   );
 }
 
