@@ -15,11 +15,11 @@ import { getFoundItemCategories, type ItemReport } from '../../utils';
 const categories = getFoundItemCategories();
 const statuses = ['Lost', 'Found'] as const;
 const fields = [
-  { name: 'title', label: 'Item title', placeholder: 'e.g. Blue water bottle', maxLength: 80 },
-  { name: 'location', label: 'Campus location', placeholder: 'e.g. Main library', maxLength: 80 },
-  { name: 'locationDetail', label: 'Location details (optional)', placeholder: 'e.g. Second floor, by the printers', maxLength: 120 },
-  { name: 'description', label: 'Description', placeholder: 'What would help someone recognize it?', maxLength: 500, multiline: true },
-  { name: 'postedBy', label: 'Your name', placeholder: 'Name shown on the report', maxLength: 60 },
+  { name: 'title', required: true, label: 'Item title', placeholder: 'e.g. Blue water bottle', maxLength: 80 },
+  { name: 'location', required: true, label: 'Campus location', placeholder: 'e.g. Main library', maxLength: 80 },
+  { name: 'locationDetail', required: false, label: 'Location details (optional)', placeholder: 'e.g. Second floor, by the printers', maxLength: 120 },
+  { name: 'description', required: true, label: 'Description', placeholder: 'What would help someone recognize it?', maxLength: 500, multiline: true },
+  { name: 'postedBy', required: true, label: 'Your name', placeholder: 'Name shown on the report', maxLength: 60 },
 ] as const;
 type Draft = Record<(typeof fields)[number]['name'], string>;
 
@@ -39,6 +39,7 @@ export default function CreateItemPage() {
   const mutedColor = dark ? '#CBD5E1' : '#475569';
   const surface = dark ? '#1E293B' : '#FFFFFF';
   const border = dark ? '#475569' : '#CBD5E1';
+  const requiredMark = <Text style={{ color: dark ? '#FCA5A5' : '#B91C1C' }}>{' *'}</Text>;
 
   async function choosePhoto() {
     try {
@@ -61,7 +62,7 @@ export default function CreateItemPage() {
     const location = draft.location.trim();
     const description = draft.description.trim();
     const postedBy = draft.postedBy.trim();
-    if (!status || !category || !title || !location || !description || !postedBy) {
+    if (!status || !category || fields.some((field) => field.required && !draft[field.name].trim())) {
       setError('Choose Lost or Found and a category, then enter a title, location, description, and your name.');
       return;
     }
@@ -100,8 +101,8 @@ export default function CreateItemPage() {
           </View>
 
           <View style={styles.group}>
-            <Text style={[styles.label, { color: textColor }]}>What happened?</Text>
-            <View accessibilityRole="radiogroup" accessibilityLabel="Report type" style={styles.statuses}>
+            <Text style={[styles.label, { color: textColor }]}>What happened?{requiredMark}</Text>
+            <View accessibilityRole="radiogroup" accessibilityLabel="Report type, required" style={styles.statuses}>
               {statuses.map((option) => {
                 const selected = status === option;
                 return (
@@ -121,7 +122,7 @@ export default function CreateItemPage() {
           </View>
 
           <View style={styles.group}>
-            <Text style={[styles.label, { color: textColor }]}>Category</Text>
+            <Text accessibilityLabel="Category, required" style={[styles.label, { color: textColor }]}>Category{requiredMark}</Text>
             <View style={styles.categories}>
               {categories.map((option) => (
                 <CategoryPill key={option} label={option} selected={category === option} onPress={() => setCategory(option)} />
@@ -131,9 +132,11 @@ export default function CreateItemPage() {
 
           {fields.map((field) => (
             <View key={field.name} style={styles.group}>
-              <Text style={[styles.label, { color: textColor }]}>{field.label}</Text>
+              <Text style={[styles.label, { color: textColor }]}>
+                {field.label}{field.required && requiredMark}
+              </Text>
               <TextInput
-                accessibilityLabel={field.label}
+                accessibilityLabel={field.required ? field.label + ', required' : field.label}
                 placeholder={field.placeholder}
                 placeholderTextColor={mutedColor}
                 selectionColor={accent}
